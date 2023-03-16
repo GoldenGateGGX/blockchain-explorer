@@ -226,6 +226,17 @@ const StyledDiv = styled.div`
     margin: 0 1rem 0 0;
     padding: 0;
 
+    .isActive > .groupHdr {
+      background: #c6a35b;
+      > .smallHide {
+        color: #020319;
+      }
+
+      > svg > path {
+        fill: #020319;
+      }
+    }
+
     > li {
       display: inline-block;
     }
