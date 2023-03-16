@@ -180,7 +180,7 @@ const StyledDiv = styled.div`
 
     .smallHide {
       + div {
-        color: #fff;
+        color: var(--color-text);
       }
     }
   }
