@@ -79,6 +79,7 @@ export default function create (t: TFunction): Routes {
     nfts(t),
     society(t),
     scheduler(t),
+    // TODO: Will be added later.
     // calendar(t),
     contracts(t),
     storage(t),
