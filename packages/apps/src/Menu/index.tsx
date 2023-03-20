@@ -19,7 +19,6 @@ import { useTranslation } from '../translate';
 import ChainInfo from './ChainInfo';
 import Grouping from './Grouping';
 import Item from './Item';
-import NodeInfo from './NodeInfo';
 
 interface Props {
   className?: string;
@@ -28,16 +27,10 @@ interface Props {
 function createExternals (t: TFunction): ItemRoute[] {
   return [
     {
-      href: 'https://github.com/polkadot-js/apps',
+      href: 'https://github.com/GoldenGateGGX/blockchain-explorer',
       icon: 'code-branch',
       name: 'github',
       text: t<string>('nav.github', 'GitHub', { ns: 'apps-routing' })
-    },
-    {
-      href: 'https://wiki.polkadot.network',
-      icon: 'book',
-      name: 'wiki',
-      text: t<string>('nav.wiki', 'Wiki', { ns: 'apps-routing' })
     }
   ];
 }
@@ -152,7 +145,8 @@ function Menu ({ className = '' }: Props): React.ReactElement<Props> {
             ))}
           </ul>
         </div>
-        <NodeInfo className='media--1400' />
+        {/** TODO: Will be added later. */}
+        {/* <NodeInfo className='media--1400' /> */}
       </div>
     </StyledDiv>
   );
