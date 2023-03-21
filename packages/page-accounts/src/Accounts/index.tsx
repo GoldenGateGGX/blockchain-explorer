@@ -305,7 +305,8 @@ function Overview ({ className = '', onStatusChange }: Props): React.ReactElemen
           onStatusChange={onStatusChange}
         />
       )}
-      <BannerExtension />
+      {/** Will be added later. */}
+      {/* <BannerExtension /> */}
       <BannerClaims />
       <Summary balance={balances.summary} />
       <SummaryBox className='header-box'>
