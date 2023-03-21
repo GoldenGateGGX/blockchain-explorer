@@ -63,7 +63,7 @@ function Progress ({ className = '', isBlurred, isDisabled, total, value }: Prop
         angle={
           drawAngle <= 180
             ? '180'
-            : (drawAngle - 0).toFixed(1)
+            : drawAngle.toFixed(1)
         }
         type='second'
       />

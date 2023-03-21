@@ -282,6 +282,20 @@ const StyledDiv = styled.div`
 
       &.chart {
         padding: 0;
+
+        .ui--Progress {
+          > .highlight--bg {
+            background: #f7b95b !important;
+          }
+          .second,.first {
+            > .highlight--bg {
+              background: #47486B !important;
+            }
+          }
+          .clip {
+            background: #f7b95b;
+          }
+        }
       }
 
       &.expand {

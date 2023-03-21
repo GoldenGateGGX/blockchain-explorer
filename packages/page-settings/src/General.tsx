@@ -128,7 +128,8 @@ function General ({ className = '' }: Props): React.ReactElement<Props> {
           options={iconOptions}
         />
       </div>
-      <div className='ui--row'>
+      {/** TODO: Will be added later. */}
+      {/* <div className='ui--row'>
         <Dropdown
           defaultValue={state.uiTheme}
           isDisabled={true}
@@ -136,7 +137,7 @@ function General ({ className = '' }: Props): React.ReactElement<Props> {
           onChange={_handleChange('uiTheme')}
           options={themeOptions}
         />
-      </div>
+      </div> */}
       <div className='ui--row'>
         <Dropdown
           defaultValue={state.i18nLang}
@@ -146,14 +147,15 @@ function General ({ className = '' }: Props): React.ReactElement<Props> {
         />
       </div>
       <h1>{t<string>('account options')}</h1>
-      <div className='ui--row'>
+      {/** TODO: Will be added later. */}
+      {/* <div className='ui--row'>
         <Dropdown
           defaultValue={state.prefix}
           label={t<string>('address prefix')}
           onChange={_handleChange('prefix')}
           options={prefixOptions}
         />
-      </div>
+      </div> */}
       {!isIpfs && !isElectron && (
         <>
           <div className='ui--row'>
