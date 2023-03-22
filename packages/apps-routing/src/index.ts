@@ -90,7 +90,8 @@ export default function create (t: TFunction): Routes {
     sudo(t),
     files(t),
     js(t),
-    utilities(t),
+    // TODO: Will be added later.
+    // utilities(t),
     settings(t)
   ];
 }
