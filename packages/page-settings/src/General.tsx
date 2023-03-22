@@ -6,14 +6,13 @@ import type { SettingsStruct } from '@polkadot/ui-settings/types';
 
 import React, { useCallback, useEffect, useMemo, useState } from 'react';
 
-import { createLanguages, createSs58 } from '@polkadot/apps-config';
-import { allNetworks } from '@polkadot/networks';
+import { createLanguages } from '@polkadot/apps-config';
 import { Button, Dropdown, MarkWarning } from '@polkadot/react-components';
 import { useApi, useIpfs, useLedger } from '@polkadot/react-hooks';
 import { settings } from '@polkadot/ui-settings';
 
 import { useTranslation } from './translate';
-import { createIdenticon, createOption, save, saveAndReload } from './util';
+import { createIdenticon, save, saveAndReload } from './util';
 
 interface Props {
   className?: string;
@@ -23,7 +22,7 @@ const _ledgerConnOptions = settings.availableLedgerConn;
 
 function General ({ className = '' }: Props): React.ReactElement<Props> {
   const { t } = useTranslation();
-  const { chainSS58, isApiReady, isElectron } = useApi();
+  const { isElectron } = useApi();
   const { isIpfs } = useIpfs();
   const { hasLedgerChain, hasWebUsb } = useLedger();
   // tri-state: null = nothing changed, false = no reload, true = reload required
@@ -46,37 +45,10 @@ function General ({ className = '' }: Props): React.ReactElement<Props> {
     []
   );
 
-  const prefixOptions = useMemo(
-    (): (Option | React.ReactNode)[] => {
-      const network = allNetworks.find(({ prefix }) => prefix === chainSS58);
-
-      return createSs58(t).map((o) =>
-        createOption(o, ['default'], 'empty', (
-          o.value === -1
-            ? isApiReady
-              ? network
-                ? ` (${network.displayName}, ${chainSS58 || 0})`
-                : ` (${chainSS58 || 0})`
-              : undefined
-            : ` (${o.value})`
-        ))
-      );
-    },
-    [chainSS58, isApiReady, t]
-  );
-
   const storageOptions = useMemo(
     () => [
       { text: t<string>('Allow local in-browser account storage'), value: 'on' },
       { text: t<string>('Do not allow local in-browser account storage'), value: 'off' }
-    ],
-    [t]
-  );
-
-  const themeOptions = useMemo(
-    () => [
-      { text: t<string>('Light theme'), value: 'light' },
-      { text: t<string>('Dark theme'), value: 'dark' }
     ],
     [t]
   );

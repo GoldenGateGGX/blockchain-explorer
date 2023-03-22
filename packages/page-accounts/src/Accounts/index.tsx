@@ -26,7 +26,6 @@ import { useTranslation } from '../translate';
 import { SORT_CATEGORY, sortAccounts } from '../util';
 import Account from './Account';
 import BannerClaims from './BannerClaims';
-import BannerExtension from './BannerExtension';
 import Summary from './Summary';
 
 interface Balances {
