@@ -5,6 +5,7 @@ import type { RuntimeVersion } from '@polkadot/types/interfaces';
 
 import React from 'react';
 
+import { nodesGgxPNG } from '@polkadot/apps-config/ui/logos/nodes';
 import { ChainImg, Icon, styled } from '@polkadot/react-components';
 import { useApi, useCall, useIpfs, useToggle } from '@polkadot/react-hooks';
 import { BestNumber, Chain } from '@polkadot/react-query';
@@ -15,8 +16,10 @@ interface Props {
   className?: string;
 }
 
+const GGX_NODE_NAME = 'GGX_TESTNET';
+
 function ChainInfo ({ className }: Props): React.ReactElement<Props> {
-  const { api, isApiReady } = useApi();
+  const { api, isApiReady, systemChain } = useApi();
   const runtimeVersion = useCall<RuntimeVersion>(isApiReady && api.rpc.state.subscribeRuntimeVersion);
   const { ipnsChain } = useIpfs();
   const [isEndpointsVisible, toggleEndpoints] = useToggle();
@@ -28,7 +31,14 @@ function ChainInfo ({ className }: Props): React.ReactElement<Props> {
         className={`apps--SideBar-logo-inner${canToggle ? ' isClickable' : ''} highlight--color-contrast`}
         onClick={toggleEndpoints}
       >
-        <ChainImg />
+        {/** TODO: Will be changed later */}
+        {systemChain === GGX_NODE_NAME
+          ? <StyledImg
+            className={'logo'}
+            src={nodesGgxPNG as string}
+          />
+          : <ChainImg />
+        }
         <div className='info media--1000'>
           <Chain className='chain' />
           {runtimeVersion && (
@@ -52,6 +62,19 @@ function ChainInfo ({ className }: Props): React.ReactElement<Props> {
     </StyledDiv>
   );
 }
+
+const STYLE = `
+  background: white;
+  border-radius: 50%;
+  box-sizing: border-box;
+  color: #333;
+  display: inline-block;
+  height: 40px;
+  margin-right: 0.75rem;
+  vertical-align: middle;
+`;
+
+const StyledImg = styled.img`${STYLE}`;
 
 const StyledDiv = styled.div`
   box-sizing: border-box;
