@@ -1,0 +1,26 @@
+name: "CI"
+
+on:
+  push:
+    branches:
+      - 'dev'
+  pull_request:
+    branches:
+      - 'dev'
+
+jobs:
+  lint:
+    name: lint
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+      - name: install node v18
+        uses: actions/setup-node@v3
+        with:
+          node-version: 18
+      - name: yarn install
+        run: yarn install
+      - name: yarn test
+        run: yarn test:all
+      - name: yarn lint
+        run: yarn lint
