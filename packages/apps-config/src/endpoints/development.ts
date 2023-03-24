@@ -4,6 +4,8 @@
 import type { TFunction } from '../types';
 import type { LinkOption } from './types';
 
+import { nodesGgxPNG } from '../ui/logos/nodes';
+
 export const CUSTOM_ENDPOINT_KEY = 'polkadot-app-custom-endpoints';
 
 interface EnvWindow {
@@ -12,6 +14,13 @@ interface EnvWindow {
     WS_URL: string;
   }
 }
+
+const setupCustomNodeUIParameters = (nodes: string[]) => {
+  return {
+    color: '#5DEFA7',
+    logo: nodes[0] === 'wss://testnode.ggxchain.io/' ? nodesGgxPNG : ''
+  };
+};
 
 export function createCustom (t: TFunction): LinkOption[] {
   const WS_URL = (
@@ -53,7 +62,7 @@ export function createOwn (t: TFunction): LinkOption[] {
         info: 'local',
         text: t('rpc.dev.custom.own', 'Custom', { ns: 'apps-config' }),
         textBy,
-        ui: {},
+        ui: setupCustomNodeUIParameters(items),
         value: textBy
       }));
     }
