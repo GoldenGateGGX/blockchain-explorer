@@ -5,7 +5,8 @@ import type { RuntimeVersion } from '@polkadot/types/interfaces';
 
 import React from 'react';
 
-import { ChainImg, Icon, styled } from '@polkadot/react-components';
+import { nodesGgxPNG } from '@polkadot/apps-config/ui/logos/nodes';
+import { Icon, styled } from '@polkadot/react-components';
 import { useApi, useCall, useIpfs, useToggle } from '@polkadot/react-hooks';
 import { BestNumber, Chain } from '@polkadot/react-query';
 
@@ -28,7 +29,12 @@ function ChainInfo ({ className }: Props): React.ReactElement<Props> {
         className={`apps--SideBar-logo-inner${canToggle ? ' isClickable' : ''} highlight--color-contrast`}
         onClick={toggleEndpoints}
       >
-        <ChainImg />
+        {/** TODO: Will be added later */}
+        {/* <ChainImg /> */}
+        <StyledImg
+          className={'logo'}
+          src={nodesGgxPNG as string}
+        />
         <div className='info media--1000'>
           <Chain className='chain' />
           {runtimeVersion && (
@@ -52,6 +58,19 @@ function ChainInfo ({ className }: Props): React.ReactElement<Props> {
     </StyledDiv>
   );
 }
+
+const STYLE = `
+  background: white;
+  border-radius: 50%;
+  box-sizing: border-box;
+  color: #333;
+  display: inline-block;
+  height: 40px;
+  margin-right: 0.75rem;
+  vertical-align: middle;
+`;
+
+const StyledImg = styled.img`${STYLE}`;
 
 const StyledDiv = styled.div`
   box-sizing: border-box;
