@@ -32,7 +32,7 @@ COPY env.sh /usr/share/nginx/html/
 
 RUN apk add --no-cache bash; chmod +x env.sh
 
-COPY --from=builder /apps/docker/nginx.conf /etc/nginx/nginx.conf
+COPY --from=builder /apps/deploy/nginx.conf /etc/nginx/nginx.conf
 COPY --from=builder /apps/ /usr/share/nginx/html
 COPY --from=builder /apps/package.json /usr/share/nginx/html/package.json
 COPY --from=builder /apps/packages /usr/share/nginx/html/packages
