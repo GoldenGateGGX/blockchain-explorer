@@ -151,7 +151,6 @@ class InputAddress extends React.PureComponent<Props, State> {
   }
 
   public override render (): React.ReactNode {
-    store.remove(ETH_STORAGE_KEY);
     const { className = '', defaultValue, hideAddress = false, isDisabled = false, isError, isMultiple, label, labelExtra, options, optionsAll, placeholder, type = DEFAULT_TYPE, withEllipsis, withLabel } = this.props;
     const hasOptions = (options && options.length !== 0) || (optionsAll && Object.keys(optionsAll[type]).length !== 0);
 
