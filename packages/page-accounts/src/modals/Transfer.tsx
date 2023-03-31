@@ -6,7 +6,6 @@ import type { AccountInfoWithProviders, AccountInfoWithRefCount } from '@polkado
 import type { BN } from '@polkadot/util';
 
 import React, { useEffect, useState } from 'react';
-import store from 'store';
 
 import { checkAddress } from '@polkadot/phishing';
 import { InputAddress, InputBalance, MarkError, MarkWarning, styled, Toggle, TxButton } from '@polkadot/react-components';

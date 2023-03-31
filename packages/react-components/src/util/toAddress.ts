@@ -3,7 +3,7 @@
 
 import { keyring } from '@polkadot/ui-keyring';
 import { hexToU8a, isHex } from '@polkadot/util';
-import { ethereumEncode, evmToAddress, isEthereumAddress } from '@polkadot/util-crypto';
+import { ethereumEncode, evmToAddress } from '@polkadot/util-crypto';
 
 const ETH_STORAGE_KEY = 'ethAddress';
 
