@@ -104,9 +104,8 @@ function Transfer ({ className = '', onClose, recipientId: propRecipientId, send
         message: t<string>('EVM address has been converted to Substrate format'),
         status: 'success'
       });
+      localStorage.removeItem(ETH_STORAGE_KEY);
     }
-
-    localStorage.removeItem(ETH_STORAGE_KEY);
   }, [ethAddress, t, queueAction]);
 
   function closeModal () {
