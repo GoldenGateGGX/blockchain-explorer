@@ -3,7 +3,9 @@
 
 import { keyring } from '@polkadot/ui-keyring';
 import { hexToU8a, isHex } from '@polkadot/util';
-import { ethereumEncode, evmToAddress, isEthereumAddress } from '@polkadot/util-crypto';
+import { ethereumEncode, evmToAddress } from '@polkadot/util-crypto';
+
+const ETH_STORAGE_KEY = 'ethAddress';
 
 export function toAddress (value?: string | Uint8Array | null, allowIndices = false, bytesLength?: 20 | 32): string | undefined {
   if (value) {
@@ -12,18 +14,14 @@ export function toAddress (value?: string | Uint8Array | null, allowIndices = fa
         ? hexToU8a(value)
         : keyring.decodeAddress(value);
 
-      if (isHex(value) && isEthereumAddress(value)) {
-        return evmToAddress(value, 42);
-      }
-
       if (!allowIndices && u8a.length !== 32 && u8a.length !== 20) {
         throw new Error('AccountIndex values not allowed');
-      } else if (bytesLength && u8a.length !== bytesLength) {
-        throw new Error('Invalid key length');
       }
 
       if (u8a.length === 20) {
-        return ethereumEncode(u8a);
+        localStorage.setItem(ETH_STORAGE_KEY, ethereumEncode(u8a));
+
+        return evmToAddress(ethereumEncode(u8a), 42);
       } else {
         return keyring.encodeAddress(u8a);
       }
