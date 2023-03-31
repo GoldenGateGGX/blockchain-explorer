@@ -55,7 +55,6 @@ interface State {
 }
 
 const STORAGE_KEY = 'options:InputAddress';
-const ETH_STORAGE_KEY = 'ethAddress';
 const DEFAULT_TYPE = 'all';
 const MULTI_DEFAULT: string[] = [];
 
