@@ -1,8 +1,6 @@
 // Copyright 2017-2023 @polkadot/react-components authors & contributors
 // SPDX-License-Identifier: Apache-2.0
 
-import store from 'store';
-
 import { keyring } from '@polkadot/ui-keyring';
 import { hexToU8a, isHex } from '@polkadot/util';
 import { ethereumEncode, evmToAddress, isEthereumAddress } from '@polkadot/util-crypto';
@@ -21,7 +19,7 @@ export function toAddress (value?: string | Uint8Array | null, allowIndices = fa
       }
 
       if (u8a.length === 20) {
-        store.set(ETH_STORAGE_KEY, ethereumEncode(u8a));
+        localStorage.setItem(ETH_STORAGE_KEY, ethereumEncode(u8a));
 
         return evmToAddress(ethereumEncode(u8a), 42);
       } else {

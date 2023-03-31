@@ -57,7 +57,7 @@ function Transfer ({ className = '', onClose, recipientId: propRecipientId, send
   const [[, recipientPhish], setPhishing] = useState<[string | null, string | null]>([null, null]);
   const balances = useCall<DeriveBalancesAll>(api.derive.balances?.all, [propSenderId || senderId]);
   const accountInfo = useCall<AccountInfoWithProviders | AccountInfoWithRefCount>(api.query.system.account, [propSenderId || senderId]);
-  const ethAddress = store.get(ETH_STORAGE_KEY) as string;
+  const ethAddress = localStorage.getItem(ETH_STORAGE_KEY);
 
   useEffect((): void => {
     const fromId = propSenderId || senderId as string;
@@ -106,11 +106,13 @@ function Transfer ({ className = '', onClose, recipientId: propRecipientId, send
         status: 'success'
       });
     }
+
+    localStorage.removeItem(ETH_STORAGE_KEY);
   }, [ethAddress, t, queueAction]);
 
   function closeModal () {
     onClose();
-    store.remove(ETH_STORAGE_KEY);
+    localStorage.removeItem(ETH_STORAGE_KEY);
   }
 
   return (
