@@ -60,6 +60,7 @@ export const ApiCtx = React.createContext<ApiProps>({} as unknown as ApiProps);
 
 const DISALLOW_EXTENSIONS: string[] = [];
 const EMPTY_STATE = { hasInjectedAccounts: false, isApiReady: false } as unknown as ApiState;
+const CHAIN_SS58_PREFIX = 'chainSS58Prefix';
 
 let api: ApiPromise;
 
@@ -145,6 +146,9 @@ async function loadOnReady (api: ApiPromise, endpoint: LinkOption | null, inject
   const ss58Format = settings.prefix === -1
     ? chainSS58
     : settings.prefix;
+
+  localStorage.setItem(CHAIN_SS58_PREFIX, chainSS58.toString());
+
   const tokenSymbol = properties.tokenSymbol.unwrapOr([formatBalance.getDefaults().unit, ...DEFAULT_AUX]);
   const tokenDecimals = properties.tokenDecimals.unwrapOr([DEFAULT_DECIMALS]);
   const isEthereum = ethereumChains.includes(api.runtimeVersion.specName.toString());
