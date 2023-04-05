@@ -1,15 +1,15 @@
 // Copyright 2017-2023 @polkadot/react-hooks authors & contributors
 // SPDX-License-Identifier: Apache-2.0
 
-import { ReactElement } from 'react';
 import type { ApiPromise } from '@polkadot/api';
 import type { BN } from '@polkadot/util';
 import type { Inflation } from './types';
 
-import { useEffect, useState } from 'react';
+import { ReactElement, useEffect, useState } from 'react';
 
 import { getInflationParams } from '@polkadot/apps-config';
 import valueToText from '@polkadot/react-params/valueToText';
+import { Codec } from '@polkadot/types/types';
 import { BN_MILLION, BN_ZERO } from '@polkadot/util';
 
 import { createNamedHook } from './createNamedHook';
@@ -58,7 +58,7 @@ function useInflationImpl (totalStaked?: BN): Inflation {
 
   useEffect((): void => {
     if (RUNTIME_GGX_NODE_NAME === runtimeNodeVersionName && queryInflation) {
-      const inflationToText = valueToText(SUBSTRATE_TYPE, queryInflation as null) as ReactElement<{
+      const inflationToText = valueToText(SUBSTRATE_TYPE, queryInflation as Codec) as ReactElement<{
         children: string; props: { children: [string]; }}>;
       const inflationPercent = parseFloat(inflationToText.props.children[0]);
       const copyState = { ...state };
