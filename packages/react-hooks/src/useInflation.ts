@@ -8,12 +8,15 @@ import type { Inflation } from './types';
 import { useEffect, useState } from 'react';
 
 import { getInflationParams } from '@polkadot/apps-config';
+import valueToText from '@polkadot/react-params/valueToText';
 import { BN_MILLION, BN_ZERO } from '@polkadot/util';
 
 import { createNamedHook } from './createNamedHook';
 import { useApi } from './useApi';
 import { useCall } from './useCall';
 
+const SUBSTRATE_TYPE = 'Perbill';
+const RUNTIME_GGX_NODE_NAME = 'golden-gate-node';
 const EMPTY: Inflation = { idealInterest: 0, idealStake: 0, inflation: 0, stakedFraction: 0, stakedReturn: 0 };
 
 function calcInflation (api: ApiPromise, totalStaked: BN, totalIssuance: BN, numAuctions: BN): Inflation {
@@ -49,16 +52,30 @@ function useInflationImpl (totalStaked?: BN): Inflation {
   const totalIssuance = useCall<BN>(api.query.balances?.totalIssuance);
   const auctionCounter = useCall<BN>(api.query.auctions?.auctionCounter);
   const [state, setState] = useState<Inflation>(EMPTY);
+  const runtimeNodeVersionName = api.runtimeVersion.specName.toString();
+  const queryInflation = useCall<unknown>(api.query.inflation?.inflationPercent);
 
   useEffect((): void => {
-    const numAuctions = api.query.auctions
-      ? auctionCounter
-      : BN_ZERO;
+    if (RUNTIME_GGX_NODE_NAME === runtimeNodeVersionName) {
+      const inflationToText = queryInflation && valueToText(SUBSTRATE_TYPE, queryInflation as null);
+      // @ts-ignore
+      const inflationPercent: number = queryInflation && parseFloat(inflationToText.props.children[0]);
+      const copyState = { ...state };
 
-    numAuctions && totalIssuance && totalStaked && setState(
-      calcInflation(api, totalStaked, totalIssuance, numAuctions)
-    );
-  }, [api, auctionCounter, totalIssuance, totalStaked]);
+      copyState.inflation = inflationPercent;
+
+      setState(copyState);
+    } else {
+      const numAuctions = api.query.auctions
+        ? auctionCounter
+        : BN_ZERO;
+
+      numAuctions && totalIssuance && totalStaked && setState(
+        calcInflation(api, totalStaked, totalIssuance, numAuctions)
+      );
+    }
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [api, auctionCounter, totalIssuance, totalStaked, queryInflation, runtimeNodeVersionName]);
 
   return state;
 }
