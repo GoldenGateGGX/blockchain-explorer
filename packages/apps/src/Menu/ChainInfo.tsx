@@ -16,11 +16,12 @@ interface Props {
   className?: string;
 }
 
-const GGX_NODE_NAME = 'GGX_TESTNET';
+const RUNTIME_GGX_NODE_NAME = 'golden-gate-node';
 
 function ChainInfo ({ className }: Props): React.ReactElement<Props> {
-  const { api, isApiReady, systemChain } = useApi();
+  const { api, isApiReady } = useApi();
   const runtimeVersion = useCall<RuntimeVersion>(isApiReady && api.rpc.state.subscribeRuntimeVersion);
+  const runtimeNodeVersionName = runtimeVersion?.specName.toString();
   const { ipnsChain } = useIpfs();
   const [isEndpointsVisible, toggleEndpoints] = useToggle();
   const canToggle = !ipnsChain;
@@ -32,7 +33,7 @@ function ChainInfo ({ className }: Props): React.ReactElement<Props> {
         onClick={toggleEndpoints}
       >
         {/** TODO: Will be changed later */}
-        {systemChain === GGX_NODE_NAME
+        {runtimeNodeVersionName && (runtimeNodeVersionName === RUNTIME_GGX_NODE_NAME)
           ? <StyledImg
             className={'logo'}
             src={nodesGgxPNG as string}
@@ -63,7 +64,7 @@ function ChainInfo ({ className }: Props): React.ReactElement<Props> {
   );
 }
 
-const STYLE = `
+const imageBox = `
   background: white;
   border-radius: 50%;
   box-sizing: border-box;
@@ -74,7 +75,7 @@ const STYLE = `
   vertical-align: middle;
 `;
 
-const StyledImg = styled.img`${STYLE}`;
+const StyledImg = styled.img`${imageBox}`;
 
 const StyledDiv = styled.div`
   box-sizing: border-box;
