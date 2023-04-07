@@ -376,7 +376,8 @@ const StyledMain = styled.main`
   .uploadMenu {
     z-index: 200;
     display: none;
-    background-color: white;
+    background-color: var(--bg-table);
+    border: 1px solid white;
     position: absolute;
     top: 43px;
     left: 0;
@@ -394,6 +395,7 @@ const StyledMain = styled.main`
 
       &:hover {
         background-color: var(--bg-page);
+        opacity: 0.7;
       }
     }
   }
