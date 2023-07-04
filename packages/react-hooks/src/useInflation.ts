@@ -58,7 +58,6 @@ function useInflationImpl (totalStaked?: BN): Inflation {
 
   useEffect((): void => {
     if (RUNTIME_GGX_NODE_NAME === runtimeNodeVersionName) {
-      // TODO: Will be added after fix queryInflation
       const inflationToText = valueToText(SUBSTRATE_TYPE, queryInflation as Codec) as ReactElement<{
         children: string; props: { children: [string]; }}>;
       const inflationPercent = parseFloat(inflationToText.props.children[0]);
