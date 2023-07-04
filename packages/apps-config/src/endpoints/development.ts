@@ -4,7 +4,7 @@
 import type { TFunction } from '../types';
 import type { LinkOption } from './types';
 
-export const CUSTOM_ENDPOINT_KEY = 'polkadot-app-custom-endpoints';
+export const CUSTOM_ENDPOINT_KEY = 'ggx-app-custom-endpoints';
 
 interface EnvWindow {
   // eslint-disable-next-line camelcase

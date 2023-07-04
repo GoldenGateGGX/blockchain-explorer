@@ -54,7 +54,7 @@ function useInflationImpl (totalStaked?: BN): Inflation {
   const auctionCounter = useCall<BN>(api.query.auctions?.auctionCounter);
   const [state, setState] = useState<Inflation>(EMPTY);
   const runtimeNodeVersionName = api.runtimeVersion.specName.toString();
-  const queryInflation = useCall<unknown>(api.query.inflation?.inflationPercent);
+  const queryInflation = useCall<unknown>(api.query?.currencyManager.inflationPercent);
 
   useEffect((): void => {
     if (RUNTIME_GGX_NODE_NAME === runtimeNodeVersionName && queryInflation) {
