@@ -16,7 +16,6 @@ import { createNamedHook } from './createNamedHook';
 import { useApi } from './useApi';
 import { useCall } from './useCall';
 
-const SUBSTRATE_TYPE = 'Perbill';
 const RUNTIME_GGX_NODE_NAME = 'golden-gate-node';
 const EMPTY: Inflation = { idealInterest: 0, idealStake: 0, inflation: 0, stakedFraction: 0, stakedReturn: 0 };
 
@@ -54,16 +53,17 @@ function useInflationImpl (totalStaked?: BN): Inflation {
   const auctionCounter = useCall<BN>(api.query.auctions?.auctionCounter);
   const [state, setState] = useState<Inflation>(EMPTY);
   const runtimeNodeVersionName = api.runtimeVersion.specName.toString();
-  const queryInflation = useCall<unknown>(api.query.inflation?.inflationPercent);
+  const queryInflation = useCall<unknown>(api.query?.currencyManager.inflation);
 
   useEffect((): void => {
-    if (RUNTIME_GGX_NODE_NAME === runtimeNodeVersionName && queryInflation) {
-      const inflationToText = valueToText(SUBSTRATE_TYPE, queryInflation as Codec) as ReactElement<{
-        children: string; props: { children: [string]; }}>;
-      const inflationPercent = parseFloat(inflationToText.props.children[0]);
+    if (RUNTIME_GGX_NODE_NAME === runtimeNodeVersionName) {
+      // TODO: Will be added after fix queryInflation
+      // const inflationToText = valueToText(SUBSTRATE_TYPE, queryInflation as Codec) as ReactElement<{
+      //   children: string; props: { children: [string]; }}>;
+      // const inflationPercent = parseFloat(inflationToText.props.children[0]);
       const copyState = { ...state };
 
-      copyState.inflation = inflationPercent;
+      copyState.inflation = 16;
 
       setState(copyState);
     } else {
