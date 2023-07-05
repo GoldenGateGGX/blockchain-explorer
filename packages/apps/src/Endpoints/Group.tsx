@@ -3,9 +3,9 @@
 
 import type { Group } from './types';
 
-import React, { useCallback, useMemo } from 'react';
+import React, { useMemo } from 'react';
 
-import { Icon, styled } from '@polkadot/react-components';
+import { styled } from '@polkadot/react-components';
 
 import Network from './Network';
 
@@ -21,12 +21,7 @@ interface Props {
   value: Group;
 }
 
-function GroupDisplay ({ affinities, apiUrl, children, className = '', index, isSelected, setApiUrl, setGroup, value: { header, isSpaced, networks } }: Props): React.ReactElement<Props> {
-  const _setGroup = useCallback(
-    () => setGroup(isSelected ? -1 : index),
-    [index, isSelected, setGroup]
-  );
-
+function GroupDisplay ({ affinities, apiUrl, children, className = '', isSelected, setApiUrl, value: { networks } }: Props): React.ReactElement<Props> {
   const filtered = useMemo(
     () => networks.filter(({ isUnreachable }) => !isUnreachable),
     [networks]
@@ -34,13 +29,6 @@ function GroupDisplay ({ affinities, apiUrl, children, className = '', index, is
 
   return (
     <StyledDiv className={`${className}${isSelected ? ' isSelected' : ''}`}>
-      <div
-        className={`groupHeader${isSpaced ? ' isSpaced' : ''}`}
-        onClick={_setGroup}
-      >
-        <Icon icon={isSelected ? 'caret-up' : 'caret-down'} />
-        {header}
-      </div>
       {isSelected && (
         <>
           <div className='groupNetworks'>
