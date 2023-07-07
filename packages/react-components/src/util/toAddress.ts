@@ -8,7 +8,7 @@ import { ethereumEncode, evmToAddress } from '@polkadot/util-crypto';
 const ETH_STORAGE_KEY = 'ethAddress';
 const CHAIN_SS58_PREFIX = 'chainSS58Prefix';
 
-export function toAddress (value?: string | Uint8Array | null, allowIndices = false): string | undefined {
+export function toAddress (value?: string | Uint8Array | null, allowIndices = false, bytesLength?: 20 | 32): string | undefined {
   if (value) {
     try {
       const u8a = isHex(value)
