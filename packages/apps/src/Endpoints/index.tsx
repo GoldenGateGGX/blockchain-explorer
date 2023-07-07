@@ -21,16 +21,16 @@ interface Props {
   onClose: () => void;
 }
 
-interface UrlState {
+export interface UrlState {
   apiUrl: string;
   groupIndex: number;
   hasUrlChanged: boolean;
   isUrlValid: boolean;
 }
 
-const STORAGE_AFFINITIES = 'network:affinities';
+export const STORAGE_AFFINITIES = 'network:affinities';
 
-function isValidUrl (url: string): boolean {
+export function isValidUrl (url: string): boolean {
   return (
     // some random length... we probably want to parse via some lib
     (url.length >= 7) &&
@@ -39,7 +39,7 @@ function isValidUrl (url: string): boolean {
   );
 }
 
-function combineEndpoints (endpoints: LinkOption[]): Group[] {
+export function combineEndpoints (endpoints: LinkOption[]): Group[] {
   return endpoints.reduce((result: Group[], e): Group[] => {
     if (e.isHeader) {
       result.push({ header: e.text, isDevelopment: e.isDevelopment, isSpaced: e.isSpaced, networks: [] });
@@ -66,7 +66,7 @@ function combineEndpoints (endpoints: LinkOption[]): Group[] {
   }, []);
 }
 
-function extractUrlState (apiUrl: string, groups: Group[]): UrlState {
+export function extractUrlState (apiUrl: string, groups: Group[]): UrlState {
   let groupIndex = groups.findIndex(({ networks }) =>
     networks.some(({ providers }) =>
       providers.some(({ url }) => url === apiUrl)
@@ -85,7 +85,7 @@ function extractUrlState (apiUrl: string, groups: Group[]): UrlState {
   };
 }
 
-function loadAffinities (groups: Group[]): Record<string, string> {
+export function loadAffinities (groups: Group[]): Record<string, string> {
   return Object
     .entries<string>(store.get(STORAGE_AFFINITIES) as Record<string, string> || {})
     .filter(([network, apiUrl]) =>
@@ -101,7 +101,7 @@ function loadAffinities (groups: Group[]): Record<string, string> {
     }), {});
 }
 
-function isSwitchDisabled (hasUrlChanged: boolean, apiUrl: string, isUrlValid: boolean): boolean {
+export function isSwitchDisabled (hasUrlChanged: boolean, apiUrl: string, isUrlValid: boolean): boolean {
   if (!hasUrlChanged) {
     return true;
   } else if (apiUrl.startsWith('light://')) {
@@ -176,6 +176,7 @@ function Endpoints ({ className = '', offset, onClose }: Props): React.ReactElem
           affinities={affinities}
           apiUrl={apiUrl}
           index={index}
+          isDisabled={canSwitch}
           isSelected={groupIndex === index}
           key={index}
           setApiUrl={_setApiUrl}

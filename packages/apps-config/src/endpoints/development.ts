@@ -4,6 +4,8 @@
 import type { TFunction } from '../types';
 import type { LinkOption } from './types';
 
+import { nodesGgxPNG } from '@polkadot/apps-config/ui/logos/nodes';
+
 export const CUSTOM_ENDPOINT_KEY = 'polkadot-app-custom-endpoints';
 
 interface EnvWindow {
@@ -46,7 +48,7 @@ export function createOwn (t: TFunction): LinkOption[] {
     info: 'local',
     text: t('', node.name, { ns: 'apps-config' }),
     textBy: node.link,
-    ui: {},
+    ui: { logo: nodesGgxPNG },
     value: node.link
   }));
 }

@@ -19,9 +19,10 @@ interface Props {
   setApiUrl: (network: string, apiUrl: string) => void;
   setGroup: (groupIndex: number) => void;
   value: Group;
+  isDisabled: boolean;
 }
 
-function GroupDisplay ({ affinities, apiUrl, children, className = '', isSelected, setApiUrl, value: { networks } }: Props): React.ReactElement<Props> {
+function GroupDisplay ({ affinities, apiUrl, children, className = '', isDisabled, isSelected, setApiUrl, value: { networks } }: Props): React.ReactElement<Props> {
   const filtered = useMemo(
     () => networks.filter(({ isUnreachable }) => !isUnreachable),
     [networks]
@@ -36,6 +37,7 @@ function GroupDisplay ({ affinities, apiUrl, children, className = '', isSelecte
               <Network
                 affinity={affinities[network.name]}
                 apiUrl={apiUrl}
+                isdisabled={isDisabled}
                 key={index}
                 setApiUrl={setApiUrl}
                 value={network}

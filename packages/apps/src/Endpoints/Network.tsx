@@ -6,6 +6,7 @@ import type { Network } from './types';
 import React, { useCallback, useMemo } from 'react';
 
 import { ChainImg, styled } from '@polkadot/react-components';
+import { useToggle } from '@polkadot/react-hooks';
 
 import { useTranslation } from '../translate';
 import Url from './Url';
@@ -16,10 +17,12 @@ interface Props {
   className?: string;
   setApiUrl: (network: string, apiUrl: string) => void;
   value: Network;
+  isdisabled: boolean
 }
 
-function NetworkDisplay ({ apiUrl, className = '', setApiUrl, value: { isChild, isRelay, isUnreachable, name, nameRelay: relay, paraId, providers, ui } }: Props): React.ReactElement<Props> {
+function NetworkDisplay ({ apiUrl, className = '', isdisabled, setApiUrl, value: { isChild, isRelay, isUnreachable, name, nameRelay: relay, paraId, providers, ui } }: Props): React.ReactElement<Props> {
   const { t } = useTranslation();
+  const [isEndpointsVisible, toggleEndpoints] = useToggle();
   const isSelected = useMemo(
     () => providers.some(({ url }) => url === apiUrl),
     [apiUrl, providers]
@@ -35,8 +38,12 @@ function NetworkDisplay ({ apiUrl, className = '', setApiUrl, value: { isChild, 
   );
 
   const _setApiUrl = useCallback(
-    (apiUrl: string) => setApiUrl(name, apiUrl),
-    [name, setApiUrl]
+    (apiUrl: string) => {
+      setApiUrl(name, apiUrl);
+
+      isEndpointsVisible && toggleEndpoints();
+    },
+    [name, setApiUrl, toggleEndpoints, isEndpointsVisible]
   );
 
   return (
@@ -70,6 +77,7 @@ function NetworkDisplay ({ apiUrl, className = '', setApiUrl, value: { isChild, 
       {isSelected && providers.map(({ name, url }): React.ReactNode => (
         <Url
           apiUrl={apiUrl}
+          isDisabled={isdisabled}
           key={url}
           label={name}
           setApiUrl={_setApiUrl}

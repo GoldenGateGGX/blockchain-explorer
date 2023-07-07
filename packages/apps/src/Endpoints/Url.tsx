@@ -4,6 +4,7 @@
 import React, { useCallback } from 'react';
 
 import { styled, Toggle } from '@polkadot/react-components';
+import { settings } from '@polkadot/ui-settings';
 
 interface Props {
   apiUrl: string;
@@ -11,20 +12,25 @@ interface Props {
   label: React.ReactNode;
   setApiUrl: (apiUrl: string) => void;
   url: string;
+  isDisabled: boolean
 }
 
-function Url ({ apiUrl, className, label, setApiUrl, url }: Props): React.ReactElement<Props> {
-  const _setApiUrl = useCallback(
-    () => setApiUrl(url),
-    [setApiUrl, url]
+function Url ({ apiUrl, className, isDisabled, label, url }: Props): React.ReactElement<Props> {
+  const _onApply = useCallback(
+    (): void => {
+      settings.set({ ...(settings.get()), apiUrl });
+      window.location.assign(`${window.location.origin}${window.location.pathname}?rpc=${encodeURIComponent(apiUrl)}${window.location.hash}`);
+    },
+    [apiUrl]
   );
 
   return (
     <StyledToggle
       className={className}
+      isDisabled={isDisabled}
       isRadio
       label={label}
-      onChange={_setApiUrl}
+      onChange={_onApply}
       value={apiUrl === url}
     />
   );
