@@ -12,7 +12,7 @@ interface Props {
   label: React.ReactNode;
   setApiUrl: (apiUrl: string) => void;
   url: string;
-  isDisabled: boolean
+  isDisabled: boolean;
 }
 
 function Url ({ apiUrl, className, isDisabled, label, url }: Props): React.ReactElement<Props> {

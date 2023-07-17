@@ -54,6 +54,7 @@ const StyledDiv = styled.div`
   > label {
     display: inline-block;
     margin: 0 0.5rem !important;
+    max-width: 16rem !important;
   }
 
   > label,
@@ -62,9 +63,14 @@ const StyledDiv = styled.div`
   }
 
   .ui--Switch {
+    position: absolute;
+    top: 10px;
+    right: 10px;
     padding: 5px 10px !important;
     border: none;
     border-radius: 5px;
+    background: var(--bg-btn);
+    color: var(--color-text);
     cursor: pointer;
 
     &.isDisabled {
