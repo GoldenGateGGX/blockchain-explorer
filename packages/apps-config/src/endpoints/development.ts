@@ -4,6 +4,8 @@
 import type { TFunction } from '../types';
 import type { LinkOption } from './types';
 
+import { nodesGgxPNG } from '@polkadot/apps-config/ui/logos/nodes';
+
 export const CUSTOM_ENDPOINT_KEY = 'polkadot-app-custom-endpoints';
 
 interface EnvWindow {
@@ -12,6 +14,9 @@ interface EnvWindow {
     WS_URL: string;
   }
 }
+
+// TODO: Will be moved to config.
+const nodes = [{ link: 'wss://testnet.node.sydney.ggxchain.io', name: 'SYDNEY' }, { link: 'wss://testnet.node.brooklyn.ggxchain.io', name: 'BROOKLYN' }];
 
 export function createCustom (t: TFunction): LinkOption[] {
   const WS_URL = (
@@ -40,39 +45,11 @@ export function createCustom (t: TFunction): LinkOption[] {
 }
 
 export function createOwn (t: TFunction): LinkOption[] {
-  try {
-    // this may not be available, e.g. when running via script
-    const storedItems = typeof localStorage === 'object' && typeof localStorage.getItem === 'function'
-      ? localStorage.getItem(CUSTOM_ENDPOINT_KEY)
-      : null;
-
-    if (storedItems) {
-      const items = JSON.parse(storedItems) as string[];
-
-      return items.map((textBy) => ({
-        info: 'local',
-        text: t('rpc.dev.custom.own', 'Custom', { ns: 'apps-config' }),
-        textBy,
-        ui: {},
-        value: textBy
-      }));
-    }
-  } catch (e) {
-    console.error(e);
-  }
-
-  return [];
-}
-
-export function createDev (t: TFunction): LinkOption[] {
-  return [
-    {
-      dnslink: 'local',
-      info: 'local',
-      text: t('rpc.dev.local', 'Local Node', { ns: 'apps-config' }),
-      textBy: '127.0.0.1:9944',
-      ui: {},
-      value: 'ws://127.0.0.1:9944'
-    }
-  ];
+  return nodes.map((node) => ({
+    info: 'local',
+    text: t('', node.name, { ns: 'apps-config' }),
+    textBy: node.link,
+    ui: { logo: nodesGgxPNG },
+    value: node.link
+  }));
 }

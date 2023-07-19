@@ -2,6 +2,7 @@
 // SPDX-License-Identifier: Apache-2.0
 
 import React, { useCallback } from 'react';
+import { useTranslation } from 'react-i18next';
 
 import { styled } from './styled';
 
@@ -15,7 +16,8 @@ interface Props {
   value?: boolean;
 }
 
-function Toggle ({ className = '', isDisabled, isRadio, label, onChange, preventDefault, value }: Props): React.ReactElement<Props> {
+function Toggle ({ className = '', isDisabled, label, onChange, preventDefault, value }: Props): React.ReactElement<Props> {
+  const { t } = useTranslation();
   const _onClick = useCallback(
     (event: React.MouseEvent<HTMLDivElement, MouseEvent>): void => {
       if (!isDisabled) {
@@ -32,24 +34,52 @@ function Toggle ({ className = '', isDisabled, isRadio, label, onChange, prevent
 
   return (
     <StyledDiv
-      className={`${className} ui--Toggle ${value ? 'isChecked' : ''} ${isDisabled ? 'isDisabled' : ''} ${isRadio ? 'isRadio' : ''}`}
+      className={`${className} ui--Toggle ${isDisabled ? 'isDisabled' : ''}`}
       onClick={_onClick}
     >
       {label && <label>{label}</label>}
-      <div className={`ui--Toggle-Slider ${isRadio ? 'highlight--before-border' : ''}`} />
+      <StyledBtn
+        className={`${isDisabled ? 'isDisabled' : ''} ui--Switch`}
+        disabled={isDisabled}
+      >{t<string>('Switch')}</StyledBtn>
     </StyledDiv>
   );
 }
+
+const StyledBtn = styled.button`
+  background: var(--bg-toggle);
+`;
 
 const StyledDiv = styled.div`
   > label {
     display: inline-block;
     margin: 0 0.5rem !important;
+    max-width: 16rem !important;
   }
 
   > label,
   > div {
     vertical-align: middle;
+  }
+
+  .ui--Switch {
+    position: absolute;
+    top: 10px;
+    right: 10px;
+    padding: 5px 10px !important;
+    border: none;
+    border-radius: 5px;
+    background: var(--bg-btn);
+    color: var(--color-text);
+    cursor: pointer;
+
+    &.isDisabled {
+      cursor: not-allowed;
+    }
+
+    &:not(.isDisabled):hover {
+      border-radius: unset;
+    }
   }
 
   .ui--Toggle-Slider {

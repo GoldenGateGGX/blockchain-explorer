@@ -36,6 +36,12 @@ const StyledDiv = styled.div`
     text-align: right;
   }
 
+  div.ui--Modal-Columns-content {
+    .ui--Switch {
+      display: none;
+    }
+  }
+
   &+& {
     margin-top: 0.25rem;
   }
